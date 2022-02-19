@@ -79,10 +79,14 @@ const createProduct = async (req, res, next) => {
 //@access   public
 const fetchProducts = async (req, res, next) => {
   try {
-    const products = await Product
-                            .find()
-                            .select('name countInStock category -_id')
-                            .populate('category', {name:1, _id:0});
+    let filter = {};
+
+    //get products by category
+    if(req.query.category){
+      filter = req.query.category.split(',');
+    }
+
+    const products = await Product.find(filter);
 
     if (!products) {
       return res.status(400).send({
@@ -92,12 +96,6 @@ const fetchProducts = async (req, res, next) => {
       });
     }
 
-    res.status(200).send({
-      success: true,
-      message: "Products Fetched Successfully",
-      count: products.length,
-      data: products,
-    });
   } catch (err) {
     res.status(500).send({
       success: false,

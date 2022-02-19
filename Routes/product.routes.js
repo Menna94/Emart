@@ -10,6 +10,8 @@ import {
     updateProduct,
     delProduct,
 } from '../Controllers/product.controller.js';
+import filterByModel from '../Middlewares/filterQuery.middleware.js';
+import Product from '../Models/Product.model.js';
 
 //Create A Product
 //POST /api/v1/products
@@ -17,7 +19,7 @@ router.post('/', createProduct);
 
 //Fetch All Products
 //GET /api/v1/products
-router.get('/', fetchProducts);
+router.get('/',filterByModel(Product, 'category') , fetchProducts);
 
 //Get The Products' Count
 //GET /api/v1/products/count
