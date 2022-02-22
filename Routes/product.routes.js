@@ -33,11 +33,11 @@ router.get('/featured/:limit', getFeaturedProducts);
 //GET /api/v1/products/:id
 router.get('/:id', fetchAProduct);
 
-//Update A Product
+//Update A Product 
 //PUT /api/v1/products/:id
 router.put('/:id', updateProduct);
 
-//Delete A Product
+//Delete A Product 
 //DELETE /api/v1/products/:id
 router.delete('/:id', delProduct)
 

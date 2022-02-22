@@ -202,4 +202,34 @@ const delUser = async (req, res, next) => {
     }
 };
 
-export { fetchUsers, fetchAUser, updateUser, delUser };
+
+//@desc     Get The Users Count
+//@route    GET /api/v1/users/count
+//@access   public
+const getUsersCount = async (req, res, next) => {
+    try {
+      const usersCount = await User.countDocuments();
+  
+      if (!usersCount) {
+        return res.status(400).send({
+          success: false,
+          message: "No Users Found!",
+          data: null,
+        });
+      }
+  
+      res.status(200).send({
+        success: true,
+        count: usersCount,
+      });
+    } catch (err) {
+      return res.status(500).send({
+        success: false,
+        message: "Internal Server Error While Getting The Users' Count",
+        data: err.message,
+      });
+    }
+};
+
+
+export { fetchUsers, fetchAUser, updateUser, delUser, getUsersCount };

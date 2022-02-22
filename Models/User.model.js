@@ -60,9 +60,16 @@ userSchema.methods.matchPass = async function(enteredPass){
 
 //sign token with jwt
 userSchema.methods.getSignedToken = function(){
-    return jwt.sign({ id: this._id}, process.env.JWT_SECRET,{
-        expiresIn: process.env.JWT_EXPIRATION
-    })
+    return jwt.sign(
+        { 
+            id: this._id, 
+            isAdmin: this.isAdmin
+        }, 
+        process.env.JWT_SECRET,
+        {
+            expiresIn: process.env.JWT_EXPIRATION
+        }
+    )
 }
 
 const User = mongoose.model('User', userSchema);

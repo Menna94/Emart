@@ -15,6 +15,8 @@ import userRoutes from './Routes/user.routes.js';
 
 //db
 import dbConnection from './configs/db.js';
+import protect from './Middlewares/auth.middleware.js';
+import errorHandler from './Middlewares/errorHandler.middleware.js';
 dbConnection();
 
 const app = express();
@@ -24,14 +26,15 @@ const port = 3000 || process.env.PORT;
 app.use(cors());
 app.options('*', cors());
 
+const api = '/api/v1';
 
 //middlewares
 app.use(express.json());
 app.use(morgan('tiny'));
-
+app.use(api, protect());
+app.use(errorHandler);
 
 //mount routes
-const api = '/api/v1';
 app.use(`${api}/products`, productRoutes);
 app.use(`${api}/categories`, categoryRoutes);
 app.use(`${api}/orders`, orderRoutes);

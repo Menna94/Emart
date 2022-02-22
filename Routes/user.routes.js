@@ -5,7 +5,8 @@ import {
     fetchUsers,
     fetchAUser,
     delUser,
-    updateUser
+    updateUser,
+    getUsersCount
 } from '../Controllers/user.controller.js';
 import filterByModel from '../Middlewares/filterQuery.middleware.js';
 import User from '../Models/User.model.js';
@@ -13,6 +14,10 @@ import User from '../Models/User.model.js';
 //Fetch All Users
 //GET /api/v1/users
 router.get('/', filterByModel(User) ,fetchUsers);
+
+//Get Users' Count
+//GET /api/v1/users/count
+router.get('/count', getUsersCount);
 
 //Fetch A Single User
 //GET /api/v1/users/:id
